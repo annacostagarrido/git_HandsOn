@@ -13,16 +13,18 @@ if len(sys.argv) == 1:
 
 args = parser.parse_args()
 
-args.seq = args.seq.upper()                 # Note we just added this line
-if re.search('^[ACGTU]+$', args.seq):
-    if re.search('T', args.seq): # if contains T, it will be a DNA
-        print ('The sequence is DNA')
-    elif re.search('U', args.seq):
-        print ('The sequence is RNA')
+args.seq = args.seq.upper()                 # Sequence in upper case
+
+if re.search('^[ACGTUN]+$', args.seq): # If the seq contains these characters is DNA or RNA
+    if "U" not in args.seq and "T" in args.seq: # If the seq contains T but not U, is DNA
+        print ('DNA')
+    elif "T" not in args.seq and "U" in args.seq: # If the seq contains U but not T, is RNA
+        print ('RNA')
     else:
-        print ('The sequence can be DNA or RNA')
+        print ('DNA or RNA') 
 else:
-    print ('The sequence is not DNA nor RNA!')
+    print ('The sequence is not DNA nor RNA')
+
 
 if args.motif:
     args.motif = args.motif.upper()
